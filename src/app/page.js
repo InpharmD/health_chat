@@ -108,12 +108,14 @@ import React, { useEffect, useRef, useState } from "react";
 import ChatInterface from "@/components/ChatInterface";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import NavbarHistory from "@/components/NavbarHistory";
-import SendIcon from '@mui/icons-material/Send';
-import MenuIcon from '@mui/icons-material/Menu';
+import SendIcon from "@mui/icons-material/Send";
+import MenuIcon from "@mui/icons-material/Menu";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import { Tooltip } from "@mui/material";
 const HomePage = () => {
   const inputRef = useRef(null);
   const [chats, setChats] = useState([]);
-  console.log(chats)
+  console.log(chats);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -121,7 +123,7 @@ const HomePage = () => {
   const [chatId, setchatId] = useState("");
   const textRef = useRef();
   const [input, setInput] = useState("");
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     if (textRef && textRef.current) {
@@ -132,7 +134,11 @@ const HomePage = () => {
   }, [input]);
 
   const handleSearch = async () => {
-    setChats((prevChats) => [...prevChats, { role: "user", content: input },{ role: "assistant", content: "Loading..." }]);
+    setChats((prevChats) => [
+      ...prevChats,
+      { role: "user", content: input },
+      { role: "assistant", content: "Loading..." },
+    ]);
     fetchData(input, "a362e194-8e55-4dc3-b403-e9444f117556", chatId);
   };
 
@@ -216,13 +222,16 @@ const HomePage = () => {
       // });
       setChats((prevChats) => {
         const newChats = [...prevChats];
-        newChats[newChats.length - 1] = { role: "assistant", content: jsonResponse.answer };
+        newChats[newChats.length - 1] = {
+          role: "assistant",
+          content: jsonResponse.answer,
+        };
         return newChats;
       });
       // setChats((prevChats) => [...prevChats, { role: "assistant", content:jsonResponse.answer }]);
       setLoading(false); // Set loading to false after the API call is done
       setSuccess(true); // Set success to true after the API call is successful
-      setInput("")
+      setInput("");
     } catch (error) {
       console.error("Error:", error);
       setLoading(false); // Set loading to false if the API call fails
@@ -231,34 +240,46 @@ const HomePage = () => {
   }
 
   const handleMenu = () => {
-    setShowMenu(!showMenu)
-  }
+    setShowMenu(!showMenu);
+  };
+  const handleReset = () => {
+    setChats("");
+    setInput("");
+    setchatId("");
+  };
   return (
-    <div className='w-full h-full flex'>
-
-    <div className='px-2 pt-[1rem] w-[15%] overflow-y-scroll h-[100vh]'>
-    <div className='border-b-2 mb-5 pb-2 flex justify-between'>
-      <spam className='px-1 font-bold' >History</spam>
-      <div onClick={handleMenu}>
-        {showMenu ?
-          <span className="cursor-pointer font-bold text-xl">&times;</span>
-          : <MenuIcon className="cursor-pointer" />
-        }
+    <div className="w-full h-full flex">
+      <div className="px-2 pt-[1rem] w-[15%] overflow-y-scroll h-[100vh]">
+        <div className="border-b-2 mb-5 pb-2 flex justify-between">
+          <spam className="px-1 font-bold">History</spam>
+          <div onClick={handleMenu}>
+            {showMenu ? (
+              <span className="cursor-pointer font-bold text-xl">&times;</span>
+            ) : (
+              <MenuIcon className="cursor-pointer" />
+            )}
+          </div>
+        </div>
+        {showMenu ? <NavbarHistory setChats={setChats} /> : ""}
       </div>
-    </div>
-    {showMenu ? <NavbarHistory setChats={setChats}/> : ''}
-  </div>
 
-
-  <div className="w-[70%]  pt-[3rem] flex flex-col overflow-y-scroll h-[100vh]">
-       <h1 className="text-center font-semibold text-4xl mb-14 bg-gradient-to-r from-green-500 to-blue-400 bg-clip-text text-transparent">
-          Health Care Data
+      <div className="w-[85%]  pt-[3rem] flex flex-col overflow-y-scroll h-[100vh]">
+        <h1 className="text-center font-semibold text-4xl mb-14 bg-gradient-to-r from-green-500 to-blue-400 bg-clip-text text-transparent">
+          Sherlock
         </h1>
-
 
         <ChatInterface chats={chats} loading={loading} className="" />
 
         <div className="fixed bottom-4 flex justify-end z-50 mx-[5%]">
+       
+          <button
+            onClick={handleReset}
+            className="bg-gradient-to-r from-green-500 to-[#38B2AC] bg-opacity-50 rounded-lg 
+        text-white w-[44px] mr-2 h-[38px] relative top-[1px]"
+          >
+            <AutorenewIcon className="p-[1px]" />
+          </button>
+
           <textarea
             type="text"
             value={input}
@@ -273,19 +294,13 @@ const HomePage = () => {
           <button
             onClick={handleSearch}
             disabled={input.trim().length === 0}
-            className='bg-gradient-to-r from-green-500 to-[#38B2AC] bg-opacity-50 rounded-lg 
-            text-white w-[44px] ml-2 h-[38px] relative top-[1px]'
+            className="bg-gradient-to-r from-green-500 to-[#38B2AC] bg-opacity-50 rounded-lg 
+            text-white w-[44px] ml-2 h-[38px] relative top-[1px]"
           >
             <SendIcon className="p-[1px]" />
           </button>
         </div>
-
       </div>
-
-      <div className='pl-4  pt-[4.9rem] w-[15%] border-l-2'>
-        test2
-      </div>
-
     </div>
   );
 };

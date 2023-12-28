@@ -10,7 +10,7 @@ const ChatInterface = ({ chats,loading }) => {
   return(
     <div className="flex flex-col space-y-4 ">
   
-      {chats.map((message, index) => (
+      {chats && chats.map((message, index) => (
         <div
           key={index}
           className={`flex  items-end ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
@@ -18,7 +18,7 @@ const ChatInterface = ({ chats,loading }) => {
           {
             message.role === 'user' ?
             <div className="w-[2rem] h-[2rem] p-2 bg-gradient-to-r from-green-500 mb-[5rem] to-blue-400 relative
-            left-[54.8%] 3k:left-[54.5%] 2xl:left-[54%] 1k:left-[53.3%] 2k:left-[52.5%] 4K:left-[51.3%] rounded-xl">
+            left-[54%] 2xl:left-[53.6%] 1k:left-[52.7%] 2k:left-[52%] 4K:left-[51%] rounded-xl">
               <PersonOutlineIcon className='w-[1rem] h-[1rem] relative bottom-2  text-white' />
             </div>
             : <div className="w-[2rem] h-[2rem] p-[6px] ml-1 bg-white rounded-xl mb-[5rem] border-2">
