@@ -1,10 +1,17 @@
 "use client"
-import React,  { useEffect, useRef } from 'react';
+import React,  { useEffect, useRef, useState } from 'react';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-
+import TypeIt from "typeit-react"; // IMPORT THE TYPEIT COMPONENT
 import Image from "next/image";
-const ChatInterface = ({ chats }) => {
 
+const ChatInterface = ({ chats,historyNavClicked }) => {
+
+  const[text,setText]=useState("");
+  const[indexnum,setIndex]=useState(0)
+
+
+
+console.log(chats.length)
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -35,13 +42,15 @@ const ChatInterface = ({ chats }) => {
             <div className="font-bold text-sm mb-1">{message.role.toUpperCase()}</div>
             {message.role === 'assistant' && message.content === 'Loading...' ? (
               <Image
-              src={"/assets/loaders.svg"}
-              alt="Loader"
-              width={500} height={300}
-              className="relative mt-5 h-8  mb-5"
-            />// Use the Loading component here
+                src={"/assets/loaders.svg"}
+                alt="Loader"
+                width={500} height={300}
+                className="relative mt-5 h-8  mb-5"
+              />// Use the Loading component here
             ) : (
-              <p>{message.content}</p>
+              // REMOVE THE CURLY BRACES HERE
+              (index === (chats.length-1) && !historyNavClicked  ?  <TypeIt options={{speed: 1}}>{message.content}</TypeIt> :  <p >{message.content}</p>) // USE THE TYPEIT COMPONENT WITH SOME OPTIONS
+              
             )}
 
             <div className="text-right text-xs text-gray-200">{new Date().toLocaleTimeString()}</div>
@@ -55,6 +64,7 @@ const ChatInterface = ({ chats }) => {
           };
 
 export default ChatInterface;
+
 
 // import React, { useEffect, useRef } from "react";
 // import PersonOutlineIcon from "@mui/icons-material/PersonOutline";

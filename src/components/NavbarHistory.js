@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const NavbarHistory = (props) => {
-  const { setChats } = props;
+  const { setChats,sethistoryNavClicked } = props;
   const [data, setData] = useState([]);
 
   console.log(data.slice(204, 210));
@@ -61,6 +61,7 @@ const NavbarHistory = (props) => {
       }
     };
     fetchData(TokenPresent.access_token);
+    sethistoryNavClicked(true)
   };
 
   return (

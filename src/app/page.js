@@ -12,6 +12,7 @@ const HomePage = () => {
   const router = useRouter();
   const inputRef = useRef(null);
   const [chats, setChats] = useState([]);
+  const[historyNavClicked,sethistoryNavClicked]= useState(false)
   console.log(chats);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -52,6 +53,7 @@ const HomePage = () => {
       { role: "assistant", content: "Loading..." },
     ]);
     fetchData(input, TokenPresent.user_id, chatId);
+    sethistoryNavClicked(false)
   };
 
   async function fetchData(question, userId, chatId) {
@@ -105,11 +107,11 @@ const HomePage = () => {
     setInput("");
     setchatId("");
   };
-   
-  const handleLogout=()=>{
+
+  const handleLogout = () => {
     localStorage.clear();
     router.push("/login");
-  }
+  };
   return (
     <div className="w-full h-full flex ">
       <div
@@ -129,7 +131,7 @@ const HomePage = () => {
             )}
           </div>
         </div>
-        {showMenu ? <NavbarHistory setChats={setChats} /> : ""}
+        {showMenu ? <NavbarHistory setChats={setChats} sethistoryNavClicked={sethistoryNavClicked} /> : ""}
       </div>
 
       <div className="w-[85%]  pt-[3rem] flex flex-col overflow-y-scroll h-[100vh]">
@@ -143,7 +145,7 @@ const HomePage = () => {
           Sherlock
         </h1>
 
-        <ChatInterface chats={chats} loading={loading} className="" />
+        <ChatInterface chats={chats} loading={loading} historyNavClicked={historyNavClicked} className="" />
 
         <div className="fixed bottom-4 flex justify-end z-50 mx-[5%]">
           <button
@@ -171,7 +173,7 @@ const HomePage = () => {
             className="bg-gradient-to-r from-green-500 to-[#38B2AC] bg-opacity-50 rounded-lg 
             text-white w-[44px] ml-2 h-[38px] relative top-[1px]"
           >
-            <SendIcon className="p-[1px]" />
+            <SendIcon className="p-[1px]"  />
           </button>
         </div>
       </div>
