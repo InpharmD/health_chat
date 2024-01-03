@@ -6,8 +6,6 @@ import Image from "next/image";
 
 const ChatInterface = ({ chats,historyNavClicked }) => {
 
-  const[text,setText]=useState("");
-  const[indexnum,setIndex]=useState(0)
 
 
 

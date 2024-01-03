@@ -19,6 +19,7 @@ const HomePage = () => {
 
   console.log(chats);
   const [chatId, setchatId] = useState("");
+  console.log(chatId)
   const textRef = useRef();
   const [input, setInput] = useState("");
   const [showMenu, setShowMenu] = useState(false);
@@ -131,7 +132,7 @@ const HomePage = () => {
             )}
           </div>
         </div>
-        {showMenu ? <NavbarHistory setChats={setChats} sethistoryNavClicked={sethistoryNavClicked} /> : ""}
+        {showMenu ? <NavbarHistory setChats={setChats} sethistoryNavClicked={sethistoryNavClicked} setchatId={setchatId} /> : ""}
       </div>
 
       <div className="w-[85%]  pt-[3rem] flex flex-col overflow-y-scroll h-[100vh]">

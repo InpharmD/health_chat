@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 const NavbarHistory = (props) => {
-  const { setChats,sethistoryNavClicked } = props;
+  const { setChats,sethistoryNavClicked ,setchatId} = props;
   const [data, setData] = useState([]);
 
-  console.log(data.slice(204, 210));
+  // console.log(data.slice(204, 210));
   const manageLengthofText = (text, maxLength) => {
     if (text.length <= maxLength) {
       return text;
@@ -43,6 +43,7 @@ const NavbarHistory = (props) => {
   }, []);
 
   const handleClick = (id) => {
+    setchatId(id)
     const fetchData = async (access_token) => {
       try {
         const apiData = await fetch(
