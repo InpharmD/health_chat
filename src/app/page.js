@@ -92,14 +92,42 @@ const HomePage = () => {
       const jsonResponse = await response.json();
       setchatId(jsonResponse.chat_id);
 
-      setChats((prevChats) => {
-        const newChats = [...prevChats];
-        newChats[newChats.length - 1] = {
-          role: "assistant",
-          content: jsonResponse.answer,
-        };
-        return newChats;
-      });
+      // setChats((prevChats) => {
+      //   const newChats = [...prevChats];
+      //   newChats[newChats.length - 1] = {
+      //     role: "assistant",
+      //     content: jsonResponse.answer,
+      //   };
+      //   return newChats;
+      // });
+
+
+    setChats((prevChats) => {
+  const newChats = [...prevChats];
+  let answer = jsonResponse.answer;
+
+  // Check if 'answer' contains 'Source:' or '(Source:'
+  const sourceIndex = answer.toLowerCase().indexOf('source:');
+  if (sourceIndex !== -1) {
+    // Find the end of the 'source:' part
+    const endOfSource = answer.indexOf(')', sourceIndex);
+    if (endOfSource !== -1) {
+      // Remove the 'source:' part from the answer
+      answer = answer.slice(0, sourceIndex) + answer.slice(endOfSource + 1);
+    } else {
+      // If there's no closing parenthesis after 'source:', remove the whole 'source:' part
+      answer = answer.slice(0, sourceIndex);
+    }
+  }
+
+  newChats[newChats.length - 1] = {
+    role: "assistant",
+    content: answer.trim(), // remove leading/trailing spaces
+  };
+  return newChats;
+});
+
+      
 
       setLoading(false); // Set loading to false after the API call is done
       setSuccess(true); // Set success to true after the API call is successful
@@ -128,58 +156,68 @@ const HomePage = () => {
   return (
     <div className="w-full h-full flex ">
 
-      <div className={showMenu ? "px-2 pt-[1rem] w-[20%] h-[90vh] border-r-2 border-yellow-200  " : ""}>
-        <div className="border-b-2 mb-5 pb-2 flex justify-between h-[4vh]" >
-          <span
-            className="px-1 font-bold w-[80%] cursor-pointer  "
-            onClick={handleReset}
+    <div className={showMenu ? "px-2 pt-[1rem] w-[20%] h-screen border-r-2 border-yellow-200  " : ""}>
+    <div className="border-b-2 mb-5 xl:pb-8 2xl:pb-2 h-[4vh] sticky top-1 flex justify-evenly" >
+      <span
+        className="px-1 font-bold w-[80%] cursor-pointer  "
+        onClick={handleReset}
+      >
+        {" "}
+        <AutorenewIcon /> New chat{" "}
+      </span>
+    </div>
+
+    <div
+      className="text-sm flex-grow max-h-[80vh] flex flex-col  overflow-y-auto ml-2 relative 
+            "
+    >
+      {showMenu ? (
+        <NavbarHistory
+          setChats={setChats}
+          sethistoryNavClicked={sethistoryNavClicked}
+          setchatId={setchatId}
+          setChatClicked={setChatClicked}
+          chatClicked={chatClicked}
+          setshowMenuModal={setshowMenuModal}
+          chatDeleted={chatDeleted}
+        />
+      ) : (
+        ""
+      )}
+    </div>
+
+    {userClicked ? (
+      <div className="fixed p-2 bottom-[8vh] 2xl:bottom-[6vh] w-[17%] bg-gradient-to-r from-purple-200 to-yellow-200 rounded-xl">
+        <ul>
+          <li
+            className="font-bold cursor-pointer p-2 text-white border-b-2"
           >
-            {" "}
-            <AutorenewIcon /> New chat{" "}
-          </span>
-        </div>
-
-        <div
-          className="text-sm flex-grow max-h-[80vh] flex flex-col  overflow-y-auto ml-2 relative 
-                "
-         >
-          {showMenu ? (
-            <NavbarHistory
-              setChats={setChats}
-              sethistoryNavClicked={sethistoryNavClicked}
-              setchatId={setchatId}
-              setChatClicked={setChatClicked}
-              chatClicked={chatClicked}
-              setshowMenuModal={setshowMenuModal}
-              chatDeleted={chatDeleted}
-            />
-          ) : (
-            ""
-          )}
-        </div>
-
-        <div
-          className="border-b-2  pb-2 flex justify-between flex-col h-[6vh] 2xl:h-[8vh]"
-          onClick={() => setuserClicked(!userClicked)}
-        >
-          {userClicked ? (
-          
-              <button
-                onClick={handleLogout}
-                className="font-bold cursor-pointer bg-gradient-to-r from-purple-200 to-yellow-200 p-2 text-white 
-         rounded-xl "
-              >
-                Logout
-              </button>
-          
-          ) : (
-            ""
-          )}
-          <span className="px-1 font-bold w-[100%] cursor-pointer ">
-            {userDetails}
-          </span>
-        </div>
+            Settings
+          </li>
+          <li
+            onClick={handleLogout}
+            className="font-bold cursor-pointer p-2 text-white rounded-xl "
+          >
+            Logout
+          </li>
+        </ul>
       </div>
+    ) : (
+      ""
+    )}
+    <div
+      className="border-b-2 fixed bottom-2 pb-2 flex justify-between flex-col h-[6vh] 2xl:h-[4vh]"
+      onClick={() => setuserClicked(!userClicked)}
+    >
+
+      <span className="px-1 font-bold w-[100%] cursor-pointer ">
+        {userDetails}
+      </span>
+    </div>
+  </div>
+
+
+
 
       <div className="w-[85%]  pt-[3rem] flex flex-col overflow-y-scroll h-[100vh]">
         <h1 className="text-center font-semibold text-4xl mb-14 bg-gradient-to-r from-purple-400 to-yellow-400 bg-clip-text text-transparent">
