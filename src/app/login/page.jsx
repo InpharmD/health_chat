@@ -79,7 +79,7 @@ const LoginPage = () => {
   // };
 
   return (
-    <div className="bg-gradient-to-r from-green-100 to-blue-100">
+    <div className="bg-gradient-to-r from-purple-50 to-yellow-50">
       <div className=" w-full h-screen ">
 
         {/*for invalid password or email*/}
@@ -97,7 +97,7 @@ const LoginPage = () => {
 
         <div className="absolute top-[2%] ml-[23rem] 2xl:ml-[27rem] 1k:ml-[34rem] 2k:ml-[38rem] 4K:ml-[69rem] left-1/4 transform -translate-x-1/2">
           <h1
-            className="bg-gradient-to-r from-green-500 to-blue-400 bg-clip-text text-transparent
+            className="bg-gradient-to-r from-purple-300 to-yellow-300 bg-clip-text text-transparent
                relative font-bold text-[30px] top-16 text-center "
           >
             SHERLOCK
@@ -106,7 +106,7 @@ const LoginPage = () => {
 
         <div
           className="w-[25%] h-[400px] 2xl:h-[450px] shadow-xl absolute top-[20%] left-[20%] 2xl:left-[25%]  1k:left-[30%] 2k:left-[34%] 4K:left-[38%] p-[2%] transform -translate-x-1/2 
-            flex-col bg-gradient-to-r from-green-500 ml-[25rem] mb-[5rem] to-blue-400 rounded-tl-[7rem]"
+            flex-col bg-gradient-to-r from-purple-300 to-yellow-300 ml-[25rem] mb-[5rem]  rounded-tl-[7rem]"
         >
 
         <div className="h-[10%] flex justify-center login text-left font-bold   text-white mt-4 "> 
@@ -150,7 +150,7 @@ const LoginPage = () => {
              ml-2 top-[12%] text-[10px] "
             onClick={handleSubmit}
           >
-            <button className="  bg-gradient-to-r from-green-500 to-blue-400 bg-clip-text text-transparent relative  " onClick={handleSubmit}>
+            <button className="  bg-gradient-to-r from-purple-300 to-yellow-300 bg-clip-text text-transparent relative  " onClick={handleSubmit}>
               Login
             </button>
           </div>
