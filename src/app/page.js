@@ -127,10 +127,11 @@ const HomePage = () => {
   };
   return (
     <div className="w-full h-full flex ">
-      <div className={showMenu ? "px-2 pt-[1rem] w-[20%] max-h-[90vh] " : ""}>
+
+      <div className={showMenu ? "px-2 pt-[1rem] w-[20%] h-[90vh] border-r-2 border-yellow-200  " : ""}>
         <div className="border-b-2 mb-5 pb-2 flex justify-between h-[4vh]" >
           <span
-            className="px-1 font-bold w-[80%] cursor-pointer text-center  "
+            className="px-1 font-bold w-[80%] cursor-pointer  "
             onClick={handleReset}
           >
             {" "}
@@ -139,7 +140,7 @@ const HomePage = () => {
         </div>
 
         <div
-          className="text-sm flex-grow max-h-[80vh] flex flex-col  overflow-y-auto ml-4 relative 
+          className="text-sm flex-grow max-h-[80vh] flex flex-col  overflow-y-auto ml-2 relative 
                 "
          >
           {showMenu ? (

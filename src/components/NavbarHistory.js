@@ -123,23 +123,38 @@ const NavbarHistory = (props) => {
     <div className="">
       {data.map((item) => {
         return (
-          <div className="flex justify-between hover:bg-gradient-to-r from-purple-200 to-yellow-200 hover:shadow-lg" key={item.id}>
-            <div
-              key={item.id}
-              className="p-2  rounded-xl break-words border-b-2
-           cursor-pointer w-[300px] h-[50px]"
-              onClick={() => handleClick(item.id)}
-            >
-              {manageLengthofText(item.name, 30)}
-            </div>
+          // <div className="flex justify-between hover:bg-gradient-to-r from-purple-200 to-yellow-200 hover:shadow-lg" key={item.id}>
+          //   <div
+          //     key={item.id}
+          //     className="p-1  rounded-xl break-words border-b-2
+          //  cursor-pointer w-[300px] h-[50px]"
+          //     onClick={() => handleClick(item.id)}
+          //   >
+          //     {manageLengthofText(item.name, 30)}
+          //   </div>
 
-            {chatClicked === item.id &&  <span className="cursor-pointer mt-3 font-bold text-xl text-center" onClick={()=>setshowMenuModal(true)}>
-            ...
-           </span> } 
+          //   {chatClicked === item.id &&  <span className="cursor-pointer mt-3 font-bold text-xl text-center" onClick={()=>setshowMenuModal(true)}>
+          //   ...
+          //  </span> } 
              
           
-          </div>
+          // </div>
           
+          <div className="flex justify-between hover:bg-gradient-to-r from-purple-200 to-yellow-200 hover:shadow-lg" key={item.id}>
+  <div
+    key={item.id}
+    className="flex items-center p-2 rounded-xl break-words border-b-2 cursor-pointer w-[200px] h-[50px]"
+    onClick={() => handleClick(item.id)}
+  >
+    <span className="mr-2">{manageLengthofText(item.name, 30)}</span>
+    {chatClicked === item.id &&  
+      <span className="cursor-pointer font-bold text-xl" onClick={()=>setshowMenuModal(true)}>
+        ...
+      </span>
+    }
+  </div>
+</div>
+
           
         );
       })}
