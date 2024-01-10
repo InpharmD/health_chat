@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useRouter } from "next/navigation";
-
+import { getToken } from "../utils/LocalStorage";
 
 
 const LoginPage = () => {
@@ -47,14 +47,14 @@ const LoginPage = () => {
   {
     item ? localStorage.setItem("LoginCreds", JSON.stringify(LoginData)) : "";
   }
+const TokenPresent=getToken()
+  // let TokenPresent;
+  // if (typeof localStorage !== "undefined") {
+  //   const isTokenPresent = JSON.parse(localStorage.getItem("LoginCreds"));
 
-  let TokenPresent;
-  if (typeof localStorage !== "undefined") {
-    const isTokenPresent = JSON.parse(localStorage.getItem("LoginCreds"));
-
-    TokenPresent = isTokenPresent?.data?.access_token;
-  }
-  console.log(TokenPresent);
+  //   TokenPresent = isTokenPresent?.data?.access_token;
+  // }
+  // console.log(TokenPresent);
 
 
   useEffect(() => {

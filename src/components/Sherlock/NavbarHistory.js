@@ -1,9 +1,10 @@
 
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState,useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { getToken } from "@/app/utils/LocalStorage";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MenuModal from "./MenuModal";
-const NavbarHistory = (props) => {
+const NavbarHistory = memo((props) => {
   const { setChats, sethistoryNavClicked, setchatId,setChatClicked,chatClicked,setshowMenuModal, chatDeleted} = props;
   const [data, setData] = useState([]);
   const router = useRouter();
@@ -16,15 +17,18 @@ const NavbarHistory = (props) => {
     return text.substring(0, maxLength) + "...";
   };
 
-  let TokenPresent;
-  if (typeof localStorage !== "undefined") {
-    const isTokenPresent = JSON.parse(localStorage.getItem("LoginCreds"));
+  // // Define and memoize getToken function
+  // const getToken = useCallback(() => {
+  //   let TokenPresent;
+  //   if (typeof localStorage !== "undefined") {
+  //     const isTokenPresent = JSON.parse(localStorage.getItem("LoginCreds"));
+  //     TokenPresent = isTokenPresent?.data;
+  //   }
+  //   return TokenPresent;
+  // }, []); // No dependencies as localStorage and LoginCreds are not expected to change
+  const TokenPresent = getToken();
 
-    TokenPresent = isTokenPresent?.data;
-  }
-  console.log(TokenPresent);
-
-
+  console.log(TokenPresent)
 
   useEffect(() => {
     const fetchData = async (user_id, access_token) => {
@@ -71,53 +75,7 @@ const NavbarHistory = (props) => {
     sethistoryNavClicked(true);
   };
 
-  const handleEdit = (id) => {
-    async function EditChat(user_id, access_token) {
-      try {
-        const response = await fetch(
-          `https://inpharmd-ai.herokuapp.com/api/v2/chats/edit?access_token=${access_token}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Accept: "application/vnd.api+json",
-            },
-            body: `user_id=${user_id}&chat_id=${id}&name=patient%20details`,
-          }
-        );
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    }
 
-    EditChat(TokenPresent?.user_id, TokenPresent?.access_token);
-  };
-
-  const handleDelete = (id) => {
-    async function deleteChat(user_id, access_token) {
-      try {
-        const response = await fetch(
-          `https://inpharmd-ai.herokuapp.com/api/v2/chats/delete?access_token=${access_token}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Accept: "application/vnd.api+json",
-            },
-            body: `user_id=${user_id}&chat_id=${id}`,
-          }
-        );
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    }
-
-    deleteChat(TokenPresent?.user_id, TokenPresent?.access_token);
-  };
 
   return (
     <div className="">
@@ -161,6 +119,6 @@ const NavbarHistory = (props) => {
       })}
     </div>
   );
-};
+});
 
 export default NavbarHistory;

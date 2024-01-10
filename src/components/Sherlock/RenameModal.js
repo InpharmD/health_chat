@@ -1,18 +1,22 @@
-import React,{useState} from "react";
-
-const RenameModal = (props) => {
+import React,{memo, useState,useCallback} from "react";
+import { getToken } from "@/app/utils/LocalStorage";
+const RenameModal = memo((props) => {
   const [title, setTitle] = useState("");
   
   const {isVisibleModal,onCloseModal,chatId,chatDeleted,setchatDeleted} =props
 
   
-  let TokenPresent;
-  if (typeof localStorage !== "undefined") {
-    const isTokenPresent = JSON.parse(localStorage.getItem("LoginCreds"));
+  // const getToken = useCallback(() => {
+  //   let TokenPresent;
+  //   if (typeof localStorage !== "undefined") {
+  //     const isTokenPresent = JSON.parse(localStorage.getItem("LoginCreds"));
+  //     TokenPresent = isTokenPresent?.data;
+  //   }
+  //   return TokenPresent;
+  // }, []); // No dependencies as localStorage and LoginCreds are not expected to change
 
-    TokenPresent = isTokenPresent?.data;
-  }
-  console.log(TokenPresent);
+  const TokenPresent = getToken();
+  console.log(TokenPresent)
 
 
   if (!isVisibleModal) {
@@ -101,6 +105,6 @@ const RenameModal = (props) => {
       </div>
     </>
   );
-};
+});
 
 export default RenameModal;

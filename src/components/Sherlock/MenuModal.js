@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 
-const MenuModal = (props) => {
+const MenuModal =memo((props) => {
   const { isVisibleModal, onCloseModal, setshowDeleteModal,setshowRenameModal } = props;
 
   if (!isVisibleModal) {
@@ -51,6 +51,6 @@ const MenuModal = (props) => {
       </div>
     </>
   );
-};
+});
 
 export default MenuModal;

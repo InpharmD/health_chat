@@ -2,9 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.colorful-text {
-    background: linear-gradient(to right, #38B2AC, #4299E1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
