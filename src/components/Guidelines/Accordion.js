@@ -160,30 +160,7 @@ const Accordion = memo((props) => {
   }, [id]);
 
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Control') {
-        // If the Control key is pressed, enable text selection
-        document.body.style.userSelect = 'text';
-      }
-    };
-  
-    const handleKeyUp = (event) => {
-      if (event.key === 'Control') {
-        // If the Control key is released, disable text selection
-        document.body.style.userSelect = 'none';
-      }
-    };
-  
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyUp);
-  
-    return () => {
-      // Clean up the event listeners when the component unmounts
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('keyup', handleKeyUp);
-    };
-  }, []);
+
   
   
   const [windowSize, setWindowSize] = useState({
