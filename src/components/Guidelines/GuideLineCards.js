@@ -46,5 +46,5 @@ const GuideLineCards = memo(({cardData,setShowAccordion, setId }) => {
       </>
   )
 })
-
+GuideLineCards.displayName = 'GuideLineCards';
 export default GuideLineCards

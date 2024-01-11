@@ -6,9 +6,9 @@
 
 //   const [accordionData, setAccordionData] = useState({});
 //   const showAccordionData= true;
-  
+
 //   const [isOpenState, setIsOpenState] = useState({});
-  
+
 //   // console.log(id)
 
 //   useEffect(() => {
@@ -29,12 +29,12 @@
 //       }
 //     };
 //     fetchData();
-  
+
 //   }, [id]);
 //   // console.log(accordionData)
 
 //   const handleBack = () => {
-   
+
 //     setShowAccordion();
 //   };
 
@@ -50,8 +50,6 @@
 // //       console.log("accordianopen")
 // //       return openAccordions.includes(index);
 // //   }
-
-
 
 //   return (
 //     <div className="bg-[#bf72fb1a]">
@@ -113,31 +111,34 @@
 
 // export default Accordion;
 
-
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import HTMLFlipBook from "react-pageflip";
 
 // Define the Page component
 const Page = React.forwardRef((props, ref) => {
   return (
-    <div className="demoPage bg-white p-5 overflow-auto h-[100%]" ref={ref}>
-      <h1 className="text-[25px] font-bold w-[60%] text-[#8347ae]">{props.title}</h1>
-      <p dangerouslySetInnerHTML={{ __html: props.content }}></p>
-      <p className="mt-3 border-t-4">Page number: {props.number}</p>
+    <div className="demoPage bg-gray-100 p-4 shadow-xl overflow-auto h-[100%] rounded-lg" ref={ref}>
+      <h1 className="text-[25px] font-bold mt-7 bg-clip-text text-transparent bg-gradient-to-r
+       from-[#8347ae] to-[#e90884] shadow-sm border-b-4">
+       <i> {props.title} </i>
+      </h1>
+
+      <p className="text-justify mt-5" dangerouslySetInnerHTML={{ __html: props.content }}></p>
+      <p className=" absolute z-50 top-4 right-4">{props.number}</p>
     </div>
   );
 });
-
-
-const Accordion = (props) => {
+;
+Page.displayName = 'Page';
+const Accordion = memo((props) => {
   const { setShowAccordion, id } = props;
 
   const [accordionData, setAccordionData] = useState({});
-  const showAccordionData= true;
-  
+  const showAccordionData = true;
+
   const [isOpenState, setIsOpenState] = useState({});
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -156,8 +157,53 @@ const Accordion = (props) => {
       }
     };
     fetchData();
-  
   }, [id]);
+
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Control') {
+        // If the Control key is pressed, enable text selection
+        document.body.style.userSelect = 'text';
+      }
+    };
+  
+    const handleKeyUp = (event) => {
+      if (event.key === 'Control') {
+        // If the Control key is released, disable text selection
+        document.body.style.userSelect = 'none';
+      }
+    };
+  
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+  
+    return () => {
+      // Clean up the event listeners when the component unmounts
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
+  
+  
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const handleResize = useCallback(() => {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [handleResize]);
 
   const handleBack = () => {
     setShowAccordion();
@@ -170,7 +216,7 @@ const Accordion = (props) => {
     }));
   };
   return (
-    <div className="bg-[#bf72fb1a]">
+    <div className="bg-[#bf72fb1a] h-screen">
       <button
         onClick={handleBack}
         className="text-[#a35bd6] ml-[85%] mt-4 hover:underline"
@@ -179,21 +225,34 @@ const Accordion = (props) => {
         View all Guidelines
       </button>
 
-      <div className="mt-[5rem] flex flex-col items-center">
+     
+
+      <div className="h-[60%]  p-[1rem] flex justify-evenly">
         {showAccordionData && Object.keys(accordionData).length > 0 ? (
-          <>
-            <HTMLFlipBook  width={700} height={700}  showCover={true}>
-              {accordionData.section_meta_data.map((item, index) => (
-                <Page key={index} title={item.title} content={item.content} number={index + 1}/>
-              ))}
-            </HTMLFlipBook>
-          </>
+          <div className="w-[80%] fixed ">
+          <HTMLFlipBook
+            width={windowSize.width * 0.4} // 80% of viewport width
+            height={windowSize.height * 0.9} // 80% of viewport height
+         
+          
+          >
+            {accordionData.section_meta_data.map((item, index) => (
+              <Page
+                key={index}
+                title={item.title}
+                content={item.content}
+                number={index + 1}
+              />
+            ))}
+          </HTMLFlipBook>
+          </div>
+
         ) : (
           ""
         )}
       </div>
     </div>
   );
-};
-
+});
+Accordion.displayName = 'Accordion';
 export default Accordion;

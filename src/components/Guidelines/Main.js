@@ -383,4 +383,5 @@ const Main = memo((props) => {
     </div>
   );
 });
+Main.displayName = 'Main';
 export default Main;

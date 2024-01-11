@@ -17,4 +17,5 @@ const GuideLinesButton =memo(() => {
   )
 }
 )
+GuideLinesButton.displayName = 'GuideLinesButton';
 export default GuideLinesButton

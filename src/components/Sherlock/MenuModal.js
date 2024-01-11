@@ -52,5 +52,5 @@ const MenuModal =memo((props) => {
     </>
   );
 });
-
+MenuModal.displayName = 'MenuModal';
 export default MenuModal;

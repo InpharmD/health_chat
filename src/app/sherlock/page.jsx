@@ -14,7 +14,7 @@ import GuideLinesButton from "@/components/Sherlock/GuideLinesButton";
 import SherlockImage from "@/components/Sherlock/SherlockImage";
 import SherlockInput from "@/components/Sherlock/SherlockInput";
 import { getToken } from "../utils/LocalStorage";
-const sherlock = () => {
+const Sherlock = () => {
   // Define and memoize getToken function
   // const getToken = useCallback(() => {
   //   let TokenPresent;
@@ -221,4 +221,4 @@ const sherlock = () => {
   );
 };
 
-export default sherlock;
+export default Sherlock;

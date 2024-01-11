@@ -120,5 +120,5 @@ const NavbarHistory = memo((props) => {
     </div>
   );
 });
-
+NavbarHistory.displayName = 'NavbarHistory';
 export default NavbarHistory;

@@ -74,5 +74,5 @@ const ChatInterface =memo(({ chats, historyNavClicked }) => {
     </div>
   );
 });
-
+ChatInterface.displayName = 'ChatInterface';
 export default ChatInterface;

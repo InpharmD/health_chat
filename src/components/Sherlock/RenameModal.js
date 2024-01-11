@@ -106,5 +106,5 @@ const RenameModal = memo((props) => {
     </>
   );
 });
-
+RenameModal.displayName = 'RenameModal';
 export default RenameModal;

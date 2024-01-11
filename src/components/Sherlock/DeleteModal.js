@@ -93,5 +93,5 @@ const DeleteModal = memo((props) => {
     </>
   );
 });
-
+DeleteModal.displayName = 'DeleteModal';
 export default DeleteModal;

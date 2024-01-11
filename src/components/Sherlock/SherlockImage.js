@@ -16,5 +16,5 @@ const SherlockImage =memo(() => {
   </div>
   )
 })
-
+SherlockImage.displayName = 'SherlockImage';
 export default SherlockImage

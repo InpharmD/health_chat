@@ -15,5 +15,5 @@ const SherlockButton = memo(() => {
         </div>
   )
 })
-
+SherlockButton.displayName = 'SherlockButton';
 export default SherlockButton

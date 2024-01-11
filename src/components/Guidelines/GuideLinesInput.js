@@ -16,5 +16,5 @@ const GuideLinesInput = memo(({ search, setSearch }) => {
     />
   );
 });
-
+GuideLinesInput.displayName = 'GuideLinesInput';
 export default GuideLinesInput;

@@ -119,5 +119,5 @@ const SherlockInput = memo(
     );
   }
 );
-
+SherlockInput.displayName = 'SherlockInput';
 export default SherlockInput;
