@@ -1,11 +1,12 @@
 import React, { memo } from 'react'
 
-const GuideLineCards = memo(({cardData,setShowAccordion, setId }) => {
+const GuideLineCards = memo(({cardData,setShowAccordion, setId,setcardName }) => {
     // console.log("card");
-    const handleCard = (id) => {
+    const handleCard = (id,title) => {
         console.log("mainstatus handlecard");
         setShowAccordion();
         setId(id);
+        setcardName(title)
       };
 
   return (
@@ -21,7 +22,7 @@ const GuideLineCards = memo(({cardData,setShowAccordion, setId }) => {
             <div
               key={item.id}
               onClick={() => {
-                handleCard(item.id);
+                handleCard(item.id,item.title);
               }}
               className="w-[45%] h-[13rem] bg-white hover:border-2 px-4 py-4 my-2 flex flex-col cursor-pointer rounded-lg shadow-xl"
             >

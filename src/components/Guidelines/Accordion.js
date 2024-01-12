@@ -111,32 +111,42 @@
 
 // export default Accordion;
 
-import React, { useState, useEffect, useCallback, memo } from "react";
+import React, { useState, useEffect, useCallback, memo, useRef } from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import HTMLFlipBook from "react-pageflip";
 
 // Define the Page component
 const Page = React.forwardRef((props, ref) => {
   return (
-    <div className="demoPage bg-gray-100 p-4 shadow-xl overflow-auto h-[100%] rounded-lg" ref={ref}>
-      <h1 className="text-[25px] font-bold mt-7 bg-clip-text text-transparent bg-gradient-to-r
-       from-[#8347ae] to-[#e90884] shadow-sm border-b-4">
-       <i> {props.title} </i>
+    <div
+      className="demoPage bg-gray-100 p-4 shadow-xl overflow-auto h-[100%] rounded-lg text-[14px]"
+      ref={ref}
+    >
+      <h1
+        className="text-[25px] font-bold mt-7 bg-clip-text text-transparent bg-gradient-to-r
+       from-[#8347ae] to-[#e90884] shadow-sm border-b-4"
+      >
+        <i> {props.title} </i>
       </h1>
 
-      <p className="text-justify mt-5" dangerouslySetInnerHTML={{ __html: props.content }}></p>
-      <p className=" absolute z-50 top-4 right-4">{props.number}</p>
+      <p
+        className="text-justify mt-5"
+        dangerouslySetInnerHTML={{ __html: props.content }}
+      ></p>
+      <p className=" absolute z-50 top-4 right-4 bg-clip-text text-transparent bg-gradient-to-r
+      from-[#8347ae] to-[#e90884] font-bold">{props.number}</p>
+
     </div>
   );
 });
-;
-Page.displayName = 'Page';
+Page.displayName = "Page";
 const Accordion = memo((props) => {
-  const { setShowAccordion, id } = props;
-
+  const { setShowAccordion, id,cardName } = props;
+  const [currentPage, setCurrentPage] = useState(0);
+  console.log(currentPage);
   const [accordionData, setAccordionData] = useState({});
   const showAccordionData = true;
-
+  const [isTextSelectionMode, setIsTextSelectionMode] = useState(false);
   const [isOpenState, setIsOpenState] = useState({});
 
   useEffect(() => {
@@ -159,10 +169,6 @@ const Accordion = memo((props) => {
     fetchData();
   }, [id]);
 
-
-
-  
-  
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -186,44 +192,75 @@ const Accordion = memo((props) => {
     setShowAccordion();
   };
 
-  const toggleAccordion = (index) => {
-    setIsOpenState((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
+  const book = useRef();
+
+  const handleTextSelectionModeToggle = () => {
+    setIsTextSelectionMode(!isTextSelectionMode);
   };
+
+  // useEffect(() => {
+  //   if (book.current && !isTextSelectionMode) {
+  //     // If we just exited text selection mode, go back to the saved page number
+  //     book.current.pageFlip().turnToPage(currentPage);
+  //   }
+  // }, [isTextSelectionMode]);
+
+  const flipToNextPage = () => {
+    book.current.pageFlip().flipNext();
+  };
+
+  const flipToPrevPage = () => {
+    book.current.pageFlip().flipPrev();
+  };
+
   return (
     <div className="bg-[#bf72fb1a] h-screen">
+ 
       <button
         onClick={handleBack}
-        className="text-[#a35bd6] ml-[85%] mt-4 hover:underline"
+        className="text-[#a35bd6] ml-[85%] mt-4 hover:underline "
       >
         <KeyboardBackspaceIcon />
         View all Guidelines
       </button>
 
-     
+      <h1 className="text-[25px] font-bold  bg-clip-text text-transparent bg-gradient-to-r
+      from-[#8347ae] to-[#e90884] text-center ">{cardName}</h1>
 
+      <div className="flex justify-around">
+      <button className="bg-gradient-to-r from-[#9c4ae9] to-[#ff8520] rounded-lg px-6 py-1 text-white" onClick={handleTextSelectionModeToggle}>
+        {isTextSelectionMode
+          ? "Exit Text Selection Mode"
+          : "Enter Text Selection Mode"}
+      </button>
+
+     
+      <button className="bg-gradient-to-r from-[#9c4ae9] to-[#ff8520] rounded-lg px-6 py-1 text-white" onClick={flipToPrevPage}>Previous page</button>
+      <button className="bg-gradient-to-r from-[#9c4ae9] to-[#ff8520] rounded-lg px-6 py-1 text-white" onClick={flipToNextPage}>Next page</button>
+      </div>
       <div className="h-[60%]  p-[1rem] flex justify-evenly">
         {showAccordionData && Object.keys(accordionData).length > 0 ? (
           <div className="w-[80%] fixed ">
-          <HTMLFlipBook
-            width={windowSize.width * 0.4} // 80% of viewport width
-            height={windowSize.height * 0.9} // 80% of viewport height
-         
+            <HTMLFlipBook
+              width={windowSize.width * 0.4} // 80% of viewport width
+              height={windowSize.height * 0.85} // 80% of viewport height
+              key={isTextSelectionMode} // Add this line
+              useMouseEvents={!isTextSelectionMode}
+              ref={book}
+              flippingTime={600}
+            >
+              {accordionData.section_meta_data.map((item, index) => (
+                <Page
+                  key={index}
+                  title={item.title}
+                  content={item.content}
+                  number={index + 1}
           
-          >
-            {accordionData.section_meta_data.map((item, index) => (
-              <Page
-                key={index}
-                title={item.title}
-                content={item.content}
-                number={index + 1}
-              />
-            ))}
-          </HTMLFlipBook>
-          </div>
 
+                />
+              ))}
+            </HTMLFlipBook>
+          </div>
         ) : (
           ""
         )}
@@ -231,5 +268,5 @@ const Accordion = memo((props) => {
     </div>
   );
 });
-Accordion.displayName = 'Accordion';
+Accordion.displayName = "Accordion";
 export default Accordion;

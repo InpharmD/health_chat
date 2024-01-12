@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { getToken } from "./utils/LocalStorage";
 const Home = () => {
   const [showAccordion, setShowAccordion] = useState(false);
+  const [cardName,setcardName]=useState("")
   const [id, setId] = useState(undefined);
   const router = useRouter();
 
@@ -36,6 +37,7 @@ const Home = () => {
             setShowAccordion(false);
           }}
           id={id}
+          cardName={cardName}
         />
       ) : (
         <Main
@@ -43,6 +45,7 @@ const Home = () => {
             setShowAccordion(true);
           }}
           setId={setId}
+          setcardName={setcardName}
         />
       )}
     </div>
