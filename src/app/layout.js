@@ -4,14 +4,14 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Guidelines_Sherlock',
-  description: 'Sherlock Bot',
+  title: 'Inpharmd Guidelines',
+  description: 'Inpharmd Guidelines',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-    <title >Guidelines_Sherlock</title>
+    <title >Inpharmd Guidelines</title>
       <body className={inter.className}>{children}</body>
     </html>
   )

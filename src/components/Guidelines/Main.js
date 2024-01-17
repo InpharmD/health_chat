@@ -8,9 +8,9 @@ import GuideLinesInput from "./GuideLinesInput";
 import GuideLineCards from "./GuideLineCards";
 import SherlockButton from "./SherlockButton";
 import { useRouter } from "next/navigation";
-import { getToken } from '../../app/utils/LocalStorage'
+import { getToken } from "../../app/utils/LocalStorage";
 const Main = memo((props) => {
-  const { setShowAccordion, setId,setcardName } = props;
+  const { setShowAccordion, setId, setcardName } = props;
   const [showStatus, setShowStatus] = useState(true);
   const [showOrganSystem, setShowOrganSystem] = useState(true);
   const [loadMore, setLoadMore] = useState(false);
@@ -25,8 +25,6 @@ const Main = memo((props) => {
   const [userDetails, setUserDetails] = useState("test@gmail.com");
   const [userClicked, setuserClicked] = useState(false);
   const router = useRouter();
-
-
 
   useEffect(() => {
     const TokenPresent = getToken();
@@ -43,7 +41,6 @@ const Main = memo((props) => {
     localStorage.clear();
     router.push("/login");
   };
-
 
   console.log("main");
   useEffect(() => {
@@ -291,15 +288,15 @@ const Main = memo((props) => {
                   ""
                 )}
                 <button
-                onClick={handleLoadMore}
-                disabled={checkOrganSystem.length > 1}
-                className={`mr-[6px] px-[8px] py-[2px] text-[8px] rounded-md text-white ml-[70%] my-2
-                              ${checkOrganSystem.length > 1
-                    ? "disabled:opacity-50 cursor-not-allowed bg-slate-500"
-                    : "bg-[#ff8520]"
-                  }`}
-              >
-
+                  onClick={handleLoadMore}
+                  disabled={checkOrganSystem.length > 1}
+                  className={`mr-[6px] px-[8px] py-[2px] text-[8px] rounded-md text-white ml-[70%] my-2
+                              ${
+                                checkOrganSystem.length > 1
+                                  ? "disabled:opacity-50 cursor-not-allowed bg-slate-500"
+                                  : "bg-[#ff8520]"
+                              }`}
+                >
                   {loadMore ? "Load Less" : "Load More"}
                 </button>
               </ul>
@@ -364,30 +361,33 @@ const Main = memo((props) => {
             ""
           )}
         </div>
-        
- <div onClick={() => setuserClicked(!userClicked)} className="border-2 bg-[#8347ae] hover:bg-[#48295e] rounded-xl w-[15rem]  mb-4">
- <span className="px-1 text-white text-[12px] flex justify-evenly py-2 w-[100%] cursor-pointer ">
-   {userDetails}
- </span>
 
-{userClicked ? (
- <div className="flex mt-1 text-[12px] justify-evenly p-2 bg-gradient-to-r from-[#cb9eeb] to-[#b765f1] rounded-br-xl rounded-bl-xl">
-   <ul>
-     <li className="font-bold cursor-pointer p-2 text-white border-b-2">
-       Settings
-     </li>
-     <li
-       onClick={handleLogout}
-       className="font-bold cursor-pointer p-2 text-white rounded-xl "
-     >
-       Logout
-     </li>
-   </ul>
- </div>
-) : (
- ""
-)}
-</div>
+        <div
+          onClick={() => setuserClicked(!userClicked)}
+          className="border-2 bg-[#8347ae] hover:bg-[#48295e] rounded-xl w-[15rem]  mb-4"
+        >
+          <span className="px-1 text-white text-[12px] flex justify-evenly py-2 w-[100%] cursor-pointer ">
+            {userDetails}
+          </span>
+
+          {userClicked ? (
+            <div className="flex mt-1 text-[12px] justify-evenly p-2 bg-gradient-to-r from-[#cb9eeb] to-[#b765f1] rounded-br-xl rounded-bl-xl">
+              <ul>
+                <li className="font-bold cursor-pointer p-2 text-white border-b-2">
+                  Settings
+                </li>
+                <li
+                  onClick={handleLogout}
+                  className="font-bold cursor-pointer p-2 text-white rounded-xl "
+                >
+                  Logout
+                </li>
+              </ul>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </aside>
 
       <div className="w-[70%] mt-[5rem] flex flex-col">
@@ -432,5 +432,5 @@ const Main = memo((props) => {
     </div>
   );
 });
-Main.displayName = 'Main';
+Main.displayName = "Main";
 export default Main;
