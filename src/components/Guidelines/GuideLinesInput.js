@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
 const GuideLinesInput = memo(({ search, setSearch }) => {
-    console.log("inputguide")
+    // console.log("inputguide")
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };

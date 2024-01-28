@@ -28,7 +28,7 @@ const NavbarHistory = memo((props) => {
   // }, []); // No dependencies as localStorage and LoginCreds are not expected to change
   const TokenPresent = getToken();
 
-  console.log(TokenPresent)
+  // console.log(TokenPresent)
 
   useEffect(() => {
     const fetchData = async (user_id, access_token) => {

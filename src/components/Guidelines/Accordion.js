@@ -143,7 +143,7 @@ Page.displayName = "Page";
 const Accordion = memo((props) => {
   const { setShowAccordion, id,cardName } = props;
   const [currentPage, setCurrentPage] = useState(0);
-  console.log(currentPage);
+  // console.log(currentPage);
   const [accordionData, setAccordionData] = useState({});
   const showAccordionData = true;
   const [isTextSelectionMode, setIsTextSelectionMode] = useState(false);
@@ -153,7 +153,7 @@ const Accordion = memo((props) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://guidelines-5f26942dfcdf.herokuapp.com/api/v2/guidelines/guideline_section?id=${id}`,
+          `https://guidelines-api.inpharmd.ai/api/v2/guidelines/guideline_section?id=${id}`,
           {
             headers: {
               Accept: "application/vnd.api+json",

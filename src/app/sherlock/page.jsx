@@ -37,16 +37,16 @@ const Sherlock = () => {
   const [chatDeleted, setchatDeleted] = useState(1);
   const [showDeleteModal, setshowDeleteModal] = useState(false);
   const [showRenameModal, setshowRenameModal] = useState(false);
-  console.log(showDeleteModal);
+  // console.log(showDeleteModal);
   const [chatClicked, setChatClicked] = useState("");
   const [userClicked, setuserClicked] = useState(false);
-  console.log(chats);
+  // console.log(chats);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  console.log(chats);
+  // console.log(chats);
   const [chatId, setchatId] = useState("");
-  console.log(chatId);
+  // console.log(chatId);
   // const textRef = useRef();
   // const [input, setInput] = useState("");
   const [showMenu, setShowMenu] = useState(true);

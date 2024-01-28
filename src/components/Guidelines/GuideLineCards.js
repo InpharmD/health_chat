@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 const GuideLineCards = memo(({cardData,setShowAccordion, setId,setcardName }) => {
     // console.log("card");
     const handleCard = (id,title) => {
-        console.log("mainstatus handlecard");
+        // console.log("mainstatus handlecard");
         setShowAccordion();
         setId(id);
         setcardName(title)

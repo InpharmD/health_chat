@@ -42,12 +42,12 @@ const Main = memo((props) => {
     router.push("/login");
   };
 
-  console.log("main");
+  // console.log("main");
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://guidelines-5f26942dfcdf.herokuapp.com/api/v2/guidelines/filter_options",
+          "https://guidelines-api.inpharmd.ai/api/v2/guidelines/filter_options",
           {
             headers: {
               Accept: "application/vnd.api+json",
@@ -61,32 +61,32 @@ const Main = memo((props) => {
       }
     };
     fetchData();
-    console.log("maineff");
+    // console.log("maineff");
   }, []);
   // console.log(asideData)
 
   const handleStatus = () => {
-    console.log("mainstatus");
+    // console.log("mainstatus");
     setShowStatus(!showStatus);
   };
 
   const handleOrganSystem = () => {
-    console.log("mainorgan");
+    // console.log("mainorgan");
     setShowOrganSystem(!showOrganSystem);
   };
 
   const handleLoadMore = () => {
-    console.log("mainloadmore");
+    // console.log("mainloadmore");
     setLoadMore(!loadMore);
   };
 
   const handleOrganism = () => {
-    console.log("mainoraganism");
+    // console.log("mainoraganism");
     setShowOrganism(!showOrganism);
   };
 
   const handleCard = (id) => {
-    console.log("mainstatus handlecard");
+    // console.log("mainstatus handlecard");
     setShowAccordion();
     setId(id);
   };
@@ -112,7 +112,7 @@ const Main = memo((props) => {
         params.append("search", debouncedValue);
       }
 
-      let endpoint = `https://guidelines-5f26942dfcdf.herokuapp.com/api/v2/guidelines/filter?${params.toString()}`;
+      let endpoint = `https://guidelines-api.inpharmd.ai/api/v2/guidelines/filter?${params.toString()}`;
 
       const response = await fetch(endpoint, {
         headers: {
@@ -135,7 +135,7 @@ const Main = memo((props) => {
         return status;
       }
     });
-    console.log("mainstat");
+    // console.log("mainstat");
   };
 
   return (
